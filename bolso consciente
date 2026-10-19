@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Bolso Consciente</title>
+<style>
+:root{--bg:#0b1110;--panel:#121c19;--panel2:#172521;--line:#29443a;--text:#eef7f1;--muted:#a7b9af;--green:#48df91;--red:#ff7777;--yellow:#f3cc65}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#183329 0,#0b1110 55%);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1150px;margin:auto;padding:22px}
+header{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:14px;background:var(--green);color:#07130d;display:grid;place-items:center;font-weight:900;font-size:24px}
+h1{font-size:clamp(1.4rem,4vw,2rem);margin:0;letter-spacing:.02em}header p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+.tag{border:1px solid var(--line);color:var(--green);border-radius:999px;padding:7px 12px;font-size:.85rem}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px}
+nav,.panel,.stat{background:rgba(18,28,25,.94);border:1px solid var(--line);border-radius:18px}
+nav{padding:10px;height:max-content;position:sticky;top:15px}
+nav button{display:block;width:100%;border:0;background:transparent;color:var(--muted);padding:12px;text-align:left;border-radius:10px;margin:2px 0}
+nav button:hover,nav button.active{background:#20372d;color:var(--green)}
+main{min-width:0}.view{display:none}.view.active{display:block}
+.heading{margin:0 0 4px;font-size:1.45rem}.sub{margin:0 0 18px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.stat{padding:16px;min-width:0}.stat .label{color:var(--muted);font-size:.86rem}.stat .value{font-size:clamp(1.15rem,3vw,1.7rem);font-weight:750;overflow-wrap:anywhere;margin-top:4px}.green{color:var(--green)}.red{color:var(--red)}.yellow{color:var(--yellow)}
+.panel{padding:20px;margin-bottom:15px}.panel h3{margin:0 0 14px;font-size:1.08rem}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}.field label{color:var(--muted);font-size:.9rem}
+input,select{width:100%;background:#0b1411;border:1px solid #365448;color:var(--text);border-radius:10px;padding:11px 12px;outline:none}
+input:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 2px #48df9122}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:#20372d;color:var(--text);padding:10px 15px;border-radius:10px;font-weight:650}
+.btn.primary{background:var(--green);border-color:var(--green);color:#07130d}.btn.danger{color:var(--red);background:#321d20;border-color:#66363a}.btn:hover{filter:brightness(1.12)}
+.notice{padding:12px 14px;border:1px solid var(--line);background:#0d1713;border-radius:12px;color:var(--muted);margin-top:12px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:.82rem;color:var(--muted);font-weight:600}td{overflow-wrap:anywhere}.table-wrap{overflow-x:auto}
+.empty{text-align:center;color:var(--muted);padding:25px 10px}
+.bar{height:10px;background:#273a32;border-radius:99px;overflow:hidden;margin-top:9px}.bar span{height:100%;display:block;width:0;background:var(--green);transition:width .2s}
+footer{text-align:center;color:var(--muted);font-size:.82rem;padding:22px 0 5px}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#e8fff1;color:#092014;padding:12px 18px;border-radius:12px;box-shadow:0 8px 30px #0008;display:none;z-index:5;max-width:calc(100% - 30px)}
+@media(max-width:760px){.layout{grid-template-columns:1fr}nav{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}.stats{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.shell{padding:14px}.panel{padding:16px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+ <div class="brand"><div class="logo" aria-hidden="true">B</div><div><h1>BOLSO CONSCIENTE</h1><p>Organize seu dinheiro. Planeje seus próximos passos.</p></div></div>
+ <div class="tag">Educação financeira</div>
+</header>
+<div class="layout">
+<nav aria-label="Menu principal">
+ <button class="active" data-view="inicio">⌂ &nbsp; Visão geral</button>
+ <button data-view="perfil">♙ &nbsp; Meu cadastro</button>
+ <button data-view="renda">＋ &nbsp; Renda mensal</button>
+ <button data-view="despesas">− &nbsp; Registrar despesa</button>
+ <button data-view="historico">▤ &nbsp; Histórico</button>
+ <button data-view="avaliacao">◎ &nbsp; Avaliação financeira</button>
+</nav>
+<main>
+<section class="view active" id="view-inicio">
+ <h2 class="heading">Visão geral</h2><p class="sub">Acompanhe sua situação financeira em um só lugar.</p>
+ <div class="stats">
+  <div class="stat"><div class="label">Renda mensal</div><div class="value green" id="dash-renda">R$ 0,00</div></div>
+  <div class="stat"><div class="label">Despesas registradas</div><div class="value red" id="dash-despesas">R$ 0,00</div></div>
+  <div class="stat"><div class="label">Saldo disponível</div><div class="value" id="dash-saldo">R$ 0,00</div></div>
+ </div>
+ <div class="panel"><h3>Uso da renda</h3><div id="uso-texto">Você ainda não registrou renda ou despesas.</div><div class="bar"><span id="uso-barra"></span></div></div>
+ <div class="panel"><h3>Comece por aqui</h3><p class="sub">Cadastre seus dados, informe quanto recebe por mês e registre seus gastos para acompanhar seu saldo.</p><div class="actions"><button class="btn primary" data-go="perfil">Fazer cadastro</button><button class="btn" data-go="despesas">Adicionar despesa</button></div></div>
+</section>
+<section class="view" id="view-perfil">
+ <h2 class="heading">Meu cadastro</h2><p class="sub">Essas informações ajudam a personalizar seu acompanhamento.</p>
+ <div class="panel"><form id="form-perfil">
+  <div class="grid2"><div class="field"><label for="nome">Nome</label><input id="nome" maxlength="80" placeholder="Digite seu nome" autocomplete="name"></div><div class="field"><label for="idade">Idade</label><input id="idade" type="number" min="1" max="120" step="1" placeholder="Sua idade"></div></div>
+  <div class="actions"><button class="btn primary" type="submit">Salvar cadastro</button></div>
+ </form><div class="notice" id="perfil-status">Nenhum cadastro salvo ainda.</div></div>
+</section>
+<section class="view" id="view-renda">
+ <h2 class="heading">Renda mensal</h2><p class="sub">Informe o total que você recebe por mês.</p>
+ <div class="panel"><form id="form-renda"><div class="field"><label for="renda">Renda mensal (R$)</label><input id="renda" inputmode="decimal" placeholder="Ex.: 2500,00" required></div><div class="actions"><button class="btn primary" type="submit">Salvar renda</button></div></form><div class="notice">Você pode atualizar esse valor sempre que sua renda mudar.</div></div>
+</section>
+<section class="view" id="view-despesas">
+ <h2 class="heading">Registrar despesa</h2><p class="sub">Adicione seus gastos um de cada vez.</p>
+ <div class="panel"><form id="form-despesa">
+  <div class="field"><label for="descricao">Descrição da despesa</label><input id="descricao" maxlength="100" placeholder="Ex.: mercado, transporte, internet" required></div>
+  <div class="grid2"><div class="field"><label for="valor">Valor (R$)</label><input id="valor" inputmode="decimal" placeholder="Ex.: 85,90" required></div><div class="field"><label for="categoria">Categoria</label><select id="categoria"><option>Alimentação</option><option>Moradia</option><option>Transporte</option><option>Saúde</option><option>Educação</option><option>Lazer</option><option>Contas</option><option>Outros</option></select></div></div>
+  <div class="actions"><button class="btn primary" type="submit">Adicionar despesa</button><button class="btn" type="reset">Limpar campos</button></div>
+ </form></div>
+</section>
+<section class="view" id="view-historico">
+ <h2 class="heading">Histórico de despesas</h2><p class="sub">Confira e remova registros, se necessário.</p>
+ <div class="panel"><div class="table-wrap"><table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Ação</th></tr></thead><tbody id="lista-despesas"></tbody></table></div><div id="historico-vazio" class="empty">Nenhuma despesa registrada.</div><div class="actions"><button class="btn danger" id="limpar-despesas" type="button">Apagar todas as despesas</button></div></div>
+</section>
+<section class="view" id="view-avaliacao">
+ <h2 class="heading">Avaliação financeira</h2><p class="sub">Uma leitura simples dos dados que você informou.</p>
+ <div class="stats"><div class="stat"><div class="label">Saldo</div><div class="value" id="aval-saldo">R$ 0,00</div></div><div class="stat"><div class="label">Percentual comprometido</div><div class="value" id="aval-percentual">0%</div></div><div class="stat"><div class="label">Despesas registradas</div><div class="value" id="aval-contagem">0</div></div></div>
+ <div class="panel"><h3>Seu resultado</h3><p id="aval-mensagem">Informe sua renda e registre despesas para receber uma avaliação.</p></div>
+ <div class="panel"><h3>Dicas para se organizar</h3><ul><li>Registre os gastos assim que acontecerem.</li><li>Separe despesas essenciais de gastos que podem esperar.</li><li>Quando possível, reserve uma parte da renda para imprevistos.</li><li>Revise seu orçamento com frequência.</li></ul><p class="sub">Esta avaliação é educativa e usa somente os dados informados no site.</p></div>
+</section>
+</main>
+</div>
+<footer>Bolso Consciente · Seus dados ficam salvos neste navegador quando o armazenamento está disponível.</footer>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+"use strict";
+const STORAGE_KEY = "bolsoConscienteWebV2";
+const defaultState = () => ({nome:"",idade:"",renda:0,despesas:[]});
+let state = defaultState();
+const $ = id => document.getElementById(id);
+const money = n => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(Number(n)||0);
+function parseMoney(value){
+  let s = String(value ?? "").trim().replace(/R\$/gi,"").replace(/\s/g,"");
+  if(!s) return NaN;
+  if(s.includes(",") && s.includes(".")) s=s.replace(/\./g,"").replace(",",".");
+  else if(s.includes(",")) s=s.replace(",",".");
+  const n=Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+function toast(message){
+ const el=$("toast"); el.textContent=message; el.style.display="block";
+ window.clearTimeout(toast.timer); toast.timer=window.setTimeout(()=>{el.style.display="none";},2600);
+}
+function load(){
+ try{
+  const raw=window.localStorage.getItem(STORAGE_KEY);
+  if(raw){
+   const parsed=JSON.parse(raw);
+   if(parsed && typeof parsed==="object"){
+    state={...defaultState(),...parsed};
+    if(!Array.isArray(state.despesas)) state.despesas=[];
+    state.renda=Number(state.renda)||0;
+    state.despesas=state.despesas.filter(d=>d && typeof d==="object").map((d,i)=>({
+      id:String(d.id || (Date.now()+i)),descricao:String(d.descricao||"Despesa"),
+      categoria:String(d.categoria||"Outros"),valor:Math.max(0,Number(d.valor)||0),
+      data:String(d.data||"")
+    }));
+   }
+  }
+ }catch(e){state=defaultState(); console.warn("Não foi possível ler os dados salvos.",e);}
+}
+function save(){
+ try{window.localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+ catch(e){toast("Não foi possível salvar neste navegador. Verifique as configurações de armazenamento.");}
+}
+function totalDespesas(){return state.despesas.reduce((sum,d)=>sum+(Number(d.valor)||0),0);}
+function showView(name){
+ document.querySelectorAll(".view").forEach(el=>el.classList.toggle("active",el.id==="view-"+name));
+ document.querySelectorAll("nav [data-view]").forEach(el=>el.classList.toggle("active",el.dataset.view===name));
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function render(){
+ const total=totalDespesas(), saldo=state.renda-total, percent=state.renda>0?(total/state.renda)*100:0;
+ $("dash-renda").textContent=money(state.renda);
+ $("dash-despesas").textContent=money(total);
+ $("dash-saldo").textContent=money(saldo);
+ $("dash-saldo").className="value "+(saldo<0?"red":"green");
+ $("uso-texto").textContent=state.renda>0
+  ? `${Math.min(100,Math.max(0,percent)).toFixed(1).replace(".",",")}% da renda foi utilizada. ${saldo<0?"As despesas ultrapassaram a renda informada.":`Saldo restante: ${money(saldo)}.`}`
+  : "Informe sua renda mensal para calcular o percentual utilizado.";
+ $("uso-barra").style.width=Math.min(100,Math.max(0,percent))+"%";
+ $("nome").value=state.nome||""; $("idade").value=state.idade||"";
+ $("perfil-status").textContent=state.nome?`Cadastro salvo para ${state.nome}${state.idade?`, ${state.idade} anos`:""}.`:"Nenhum cadastro salvo ainda.";
+ $("renda").value=state.renda?String(state.renda.toFixed(2)).replace(".",","):"";
+ $("aval-saldo").textContent=money(saldo); $("aval-saldo").className="value "+(saldo<0?"red":"green");
+ $("aval-percentual").textContent=state.renda>0?percent.toFixed(1).replace(".",",")+"%":"—";
+ $("aval-contagem").textContent=String(state.despesas.length);
+ let msg;
+ if(state.renda<=0 && total===0) msg="Informe sua renda e registre despesas para receber uma avaliação.";
+ else if(state.renda<=0) msg="Você registrou despesas, mas ainda não informou a renda mensal. Cadastre sua renda para avaliar o orçamento.";
+ else if(saldo<0) msg=`Atenção: suas despesas superam sua renda em ${money(Math.abs(saldo))}. Revise os gastos e priorize os essenciais.`;
+ else if(percent>=80) msg=`Você utilizou ${percent.toFixed(1).replace(".",",")}% da renda. Tente revisar os gastos e planejar uma reserva, se possível.`;
+ else if(percent>=50) msg=`Você utilizou ${percent.toFixed(1).replace(".",",")}% da renda. Acompanhe os gastos para manter o orçamento equilibrado.`;
+ else msg=`Até agora, ${percent.toFixed(1).replace(".",",")}% da renda foi comprometida. Seu saldo é ${money(saldo)}; continue registrando os gastos.`;
+ $("aval-mensagem").textContent=msg;
+ const tbody=$("lista-despesas"); tbody.innerHTML="";
+ const empty=$("historico-vazio"); empty.style.display=state.despesas.length?"none":"block";
+ [...state.despesas].reverse().forEach(d=>{
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td>${escapeHTML(d.data||"—")}</td><td>${escapeHTML(d.descricao)}</td><td>${escapeHTML(d.categoria)}</td><td>${money(d.valor)}</td><td><button class="btn danger" type="button" data-delete="${escapeHTML(d.id)}">Remover</button></td>`;
+  tbody.appendChild(tr);
+ });
+}
+document.querySelectorAll("nav [data-view]").forEach(btn=>btn.addEventListener("click",()=>showView(btn.dataset.view)));
+document.querySelectorAll("[data-go]").forEach(btn=>btn.addEventListener("click",()=>showView(btn.dataset.go)));
+$("form-perfil").addEventListener("submit",e=>{
+ e.preventDefault(); const nome=$("nome").value.trim(), idade=$("idade").value.trim();
+ if(idade && (!Number.isInteger(Number(idade))||Number(idade)<1||Number(idade)>120)){toast("Informe uma idade válida entre 1 e 120.");return;}
+ state.nome=nome;state.idade=idade;save();render();toast("Cadastro salvo com sucesso!");
+});
+$("form-renda").addEventListener("submit",e=>{
+ e.preventDefault();const renda=parseMoney($("renda").value);
+ if(!Number.isFinite(renda)||renda<0){toast("Digite uma renda válida, usando por exemplo 2500,00.");return;}
+ state.renda=Math.round(renda*100)/100;save();render();toast("Renda mensal salva!");
+});
+$("form-despesa").addEventListener("submit",e=>{
+ e.preventDefault();const descricao=$("descricao").value.trim(),valor=parseMoney($("valor").value);
+ if(!descricao){toast("Digite uma descrição para a despesa.");$("descricao").focus();return;}
+ if(!Number.isFinite(valor)||valor<=0){toast("Digite um valor maior que zero, por exemplo 85,90.");$("valor").focus();return;}
+ state.despesas.push({id:String(Date.now())+"-"+Math.random().toString(36).slice(2,8),descricao,categoria:$("categoria").value,valor:Math.round(valor*100)/100,data:new Date().toLocaleDateString("pt-BR")});
+ save();render();$("form-despesa").reset();toast("Despesa adicionada com sucesso!");
+});
+$("lista-despesas").addEventListener("click",e=>{
+ const btn=e.target.closest("[data-delete]");if(!btn)return;
+ state.despesas=state.despesas.filter(d=>String(d.id)!==btn.dataset.delete);save();render();toast("Despesa removida.");
+});
+$("limpar-despesas").addEventListener("click",()=>{
+ if(!state.despesas.length){toast("Não há despesas para apagar.");return;}
+ if(window.confirm("Deseja apagar todas as despesas registradas? Esta ação não pode ser desfeita.")){state.despesas=[];save();render();toast("Histórico de despesas apagado.");}
+});
+load();render();
+})();
+</script>
+</body>
+</html>
